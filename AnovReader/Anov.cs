@@ -1,6 +1,6 @@
 ﻿namespace AnovReader;
 
-public class Class1
+public class Anov
 {
 
 }
