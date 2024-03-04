@@ -4,7 +4,7 @@ namespace AnovReader;
 
 public class Anov
 {
-    static void Read(string str)
+    public static void Read(string str)
     {
         Match match;
         // "- "から始まる"人物"を読み込み
