@@ -1,4 +1,4 @@
-﻿using AnovReader;
+﻿using AnovSyntax;
 
 // input test that is written in Anov Syntax.
 string input_1 = "- a girl";
