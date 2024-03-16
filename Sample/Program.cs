@@ -1,8 +1,14 @@
 ﻿using AnovSyntax;
 
 // input test that is written in Anov Syntax.
-string input_1 = "- a girl";
-string input_2 = "[Hello, World!]";
+string filePath = @"sample.anov";
 
-Anov.Read(input_1);
-Anov.Read(input_2);
+using (StreamReader sr = new(filePath))
+{
+    while (!sr.EndOfStream)
+    {
+        string? line = sr.ReadLine();
+        if (line is not null)
+            Anov.Read(line);
+    }
+}
