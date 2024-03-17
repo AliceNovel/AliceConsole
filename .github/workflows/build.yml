@@ -1,0 +1,19 @@
+name: Build for CI
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: dotnet build AnovReader/AnovReader.csproj -c Release
