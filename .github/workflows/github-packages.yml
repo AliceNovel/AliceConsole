@@ -1,4 +1,4 @@
-name: Release and Upload Nuget
+name: Release Nuget on GitHub Packages
 
 on:
   push:

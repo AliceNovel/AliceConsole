@@ -1,0 +1,28 @@
+name: Release Nuget on Nuget.org
+
+on:
+  push:
+    tags:
+    - "v*"
+
+jobs:
+  release-nuget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify commit exists in origin/main
+        run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+          git branch --remote --contains | grep origin/main
+
+      - name: Get version information from tag
+        id: get_version
+        uses: battila7/get-version-action@v2
+
+      - name: Pack
+        run: dotnet pack AnovReader/AnovReader.csproj -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
+
+      - name: Push
+        run: dotnet nuget push AnovReader/bin/Release/AnovReader.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.NUGET_API_KEY }}
