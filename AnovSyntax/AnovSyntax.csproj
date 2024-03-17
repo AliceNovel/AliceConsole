@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
 
     <!-- NuGet -->
+    <PackageId>Lemon73.AliceProject.AnovSyntax</PackageId>
+    <!-- <Version>0.1.0</Version> -->
     <Authors>Lemon73</Authors>
     <Company>AliceProject</Company>
     <Copyright>Copyright © author and contributors</Copyright>
@@ -18,7 +20,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Title>Anov Syntax Extension</Title>
+    <Title>Alice Console</Title>
     <Description>Alice Console provides the ability to do this amazing thing in your Alice Novel application.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
