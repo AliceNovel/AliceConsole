@@ -1,4 +1,4 @@
-name: Test Programs
+name: Build & Test
 
 on:
   push:
@@ -14,6 +14,16 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
     - uses: actions/checkout@v4
-    - name: Test
-      run: dotnet test AnovReader/AnovReader.csproj
+    - name: Build & Test
+      run: |
+        dotnet build AnovReader/AnovReader.csproj -c Release
+        dotnet test AnovReader/AnovReader.csproj
