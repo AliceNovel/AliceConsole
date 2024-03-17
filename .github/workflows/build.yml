@@ -25,5 +25,5 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build & Test
       run: |
-        dotnet build AnovReader/AnovReader.csproj -c Release
-        dotnet test AnovReader/AnovReader.csproj
+        dotnet build AnovSyntax/AnovSyntax.csproj -c Release
+        dotnet test AnovSyntax/AnovSyntax.csproj
