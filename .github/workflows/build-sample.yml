@@ -1,0 +1,40 @@
+name: Build Sample
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        rid: [win-x64, win-x86, win-arm64, osx-x64, osx-arm64, linux-x64, linux-arm64]
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Publish
+      run: |
+        dotnet publish Sample/Sample.csproj -c Release -o ${{ matrix.rid }} -r ${{ matrix.rid }} --self-contained true -p:PublishReadyToRun=false -p:PublishTrimmed=true
+
+    # Upload Artifacts
+    - name: 'Upload Artifact: ${{ matrix.rid }}'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.rid }}
+        path: ${{ matrix.rid }}
