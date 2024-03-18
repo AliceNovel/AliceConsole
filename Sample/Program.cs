@@ -13,4 +13,5 @@ using (StreamReader sr = new(filePath))
         else if (line is not null)
             Anov.Read(line);
     }
+    Console.ReadLine();
 }
