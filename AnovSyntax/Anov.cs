@@ -4,6 +4,10 @@ namespace AnovSyntax;
 
 public class Anov
 {
+    /// <summary>
+    /// Read the text in anov syntax.
+    /// </summary>
+    /// <param name="str">The text in anov syntax</param>
     public static void Read(string str)
     {
         Match match;
