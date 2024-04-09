@@ -12,6 +12,24 @@ public class Anov
     {
         Match match;
 
+        // Unsupported
+        // Read "> place"
+        match = Regex.Match(str, @"> (.*)");
+        if (match.Success)
+            Console.WriteLine("<place>");
+
+        // Unsupported
+        // Read "bgm: background-music"
+        match = Regex.Match(str, @"bgm: (.*)");
+        if (match.Success)
+            Console.WriteLine("<bgm>");
+
+        // Unsupported
+        // Read "movie: movie"
+        match = Regex.Match(str, @"movie: (.*)");
+        if (match.Success)
+            Console.WriteLine("<movie>");
+
         // Read "- people-name / emotion"
         match = Regex.Match(str, @"- (.*?)/");
         if (match.Success)
