@@ -16,7 +16,6 @@ public class Anov
         match = Regex.Match(str, @"- (.*)");
         if (match.Success)
             Console.Write(match.Groups[1].Value.Trim());
-            Console.Write(match.Groups[1].Value);
 
         // Read "[conversatioc-content]"
         match = Regex.Match(str, @"\[(.*?)\]");
