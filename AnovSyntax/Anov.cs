@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace AnovSyntax;
 
@@ -15,11 +15,12 @@ public class Anov
         // Read "- people-name"
         match = Regex.Match(str, @"- (.*)");
         if (match.Success)
+            Console.Write(match.Groups[1].Value.Trim());
             Console.Write(match.Groups[1].Value);
 
         // Read "[conversatioc-content]"
         match = Regex.Match(str, @"\[(.*?)\]");
         if (match.Success)
-            Console.WriteLine(" \"" + match.Groups[1].Value + "\"");
+            Console.WriteLine(" \"" + match.Groups[1].Value.Trim() + "\"");
     }
 }
