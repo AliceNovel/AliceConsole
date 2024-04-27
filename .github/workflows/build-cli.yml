@@ -1,4 +1,4 @@
-name: Build Sample
+name: Build AliceConsole
 
 on:
   push:
@@ -30,11 +30,11 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet publish Sample/Sample.csproj -c Release -o ${{ matrix.rid }} -r ${{ matrix.rid }} --self-contained true -p:PublishReadyToRun=false -p:PublishTrimmed=true
+        dotnet publish AliceConsole/AliceConsole.csproj -c Release -o ${{ matrix.rid }} -r ${{ matrix.rid }} --self-contained true -p:PublishReadyToRun=false -p:PublishTrimmed=true
 
     - name: Copy anov file
       run: |
-        cp Sample/sample.anov ${{ matrix.rid }}
+        cp AliceConsole/sample.anov ${{ matrix.rid }}
 
     # Upload Artifacts
     - name: 'Upload Artifact: ${{ matrix.rid }}'
