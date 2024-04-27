@@ -48,7 +48,7 @@ public class Anov
         if (match.Success)
             _return += " (" + match.Groups[1].Value.Trim() + ")";
 
-        // Read "[conversatioc-content]"
+        // Read "[conversation-content]"
         match = Regex.Match(str, @"\[(.*?)\]");
         if (match.Success)
             _return += " \"" + match.Groups[1].Value.Trim() + "\"";
