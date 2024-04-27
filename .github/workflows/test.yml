@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 on:
   push:
@@ -23,6 +23,6 @@ jobs:
         dotnet-version: 8.0.x
 
     - uses: actions/checkout@v4
-    - name: Build
+    - name: Test
       run: |
-        dotnet build AnovSyntax/AnovSyntax.csproj -c Release
+        dotnet test Test/Test.csproj

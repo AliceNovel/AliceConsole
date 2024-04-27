@@ -12,8 +12,8 @@
     <Company>AliceProject</Company>
     <Copyright>Copyright © author and contributors</Copyright>
     <IsPackable>True</IsPackable>
-    <PackageProjectUrl>https://github.com/AliceNovel/Alice-Console</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/AliceNovel/Alice-Console</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/AliceNovel/AliceConsole</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AliceNovel/AliceConsole</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>alicenovel;aliceproject;anov;anovsyntax;</PackageTags>
     <IncludeSymbols>True</IncludeSymbols>
