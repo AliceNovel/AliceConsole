@@ -19,19 +19,22 @@ Alice Novel for CLI.
 [code-size-badge]: https://img.shields.io/github/languages/code-size/AliceNovel/AliceConsole
 
 <!-- history badges -->
-|               | GitHub Actions  |
-| ------------- | --------------- |
-| Anov Syntax   | [![anov-badge]][anov] |
-| Alice Console | [![cli-badge]][cli] |
-| CodeQL        | [![codeql-badge]][codeql] |
-|               | [![history-badge]][anov] |
+|                     | GitHub Actions            |
+| ------------------- | ------------------------- |
+| Anov Syntax - Build | [![anov-badge]][anov]     |
+| Anov Syntax - Test  | [![test-badge]][test]     |
+| Alice Console       | [![cli-badge]][cli]       |
+| CodeQL              | [![codeql-badge]][codeql] |
+|                     | [![history-badge]][anov]  |
 <!-- history badges -->
 
 [anov]: https://github.com/AliceNovel/AliceConsole/actions/workflows/build.yml
+[test]: https://github.com/AliceNovel/AliceConsole/actions/workflows/test.yml
 [cli]: https://github.com/AliceNovel/AliceConsole/actions/workflows/build-cli.yml
 [codeql]: https://github.com/AliceNovel/AliceConsole/actions/workflows/codeql.yml
 
 [anov-badge]: https://img.shields.io/github/actions/workflow/status/AliceNovel/AliceConsole/build.yml?label=github&logo=github&style=flat "GitHub Actions Status"
+[test-badge]: https://img.shields.io/github/actions/workflow/status/AliceNovel/AliceConsole/test.yml?label=github&logo=github&style=flat "GitHub Actions Status"
 [cli-badge]: https://img.shields.io/github/actions/workflow/status/AliceNovel/AliceConsole/build-cli.yml?label=github&logo=github&style=flat "GitHub Actions Status"
 [codeql-badge]: https://img.shields.io/github/actions/workflow/status/AliceNovel/AliceConsole/codeql.yml?label=github&logo=github&style=flat "GitHub Actions Status"
 
