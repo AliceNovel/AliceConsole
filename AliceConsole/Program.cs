@@ -11,7 +11,7 @@ using (StreamReader sr = new(filePath))
         if (line == "")
             Console.ReadLine();
         else if (line is not null)
-            Anov.Read(line);
+            Console.WriteLine(Anov.Read(line));
     }
     Console.ReadLine();
 }

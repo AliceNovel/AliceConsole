@@ -8,48 +8,51 @@ public class Anov
     /// Read the text in anov syntax.
     /// </summary>
     /// <param name="str">The text in anov syntax</param>
-    public static void Read(string str)
+    public static string Read(string str)
     {
         Match match;
+        string _return = "";
 
         // Unsupported
         // Read "> place"
         match = Regex.Match(str, @"> (.*)");
         if (match.Success)
-            Console.WriteLine("<place>");
+            _return += "<place>";
 
         // Unsupported
         // Read "bgm: background-music"
         match = Regex.Match(str, @"bgm: (.*)");
         if (match.Success)
-            Console.WriteLine("<bgm>");
+            _return += "<bgm>";
 
         // Unsupported
         // Read "movie: movie"
         match = Regex.Match(str, @"movie: (.*)");
         if (match.Success)
-            Console.WriteLine("<movie>");
+            _return += "<movie>";
 
         // Read "- people-name / emotion"
         match = Regex.Match(str, @"- (.*?)/");
         if (match.Success)
-            Console.Write(match.Groups[1].Value.Trim());
+            _return += match.Groups[1].Value.Trim();
         else
         {
             // Read "- people-name"
             match = Regex.Match(str, @"- (.*)");
             if (match.Success)
-                Console.Write(match.Groups[1].Value.Trim());
+                _return += match.Groups[1].Value.Trim();
         }
 
         // Read "/ emotion"
         match = Regex.Match(str, @"/ (.*)");
         if (match.Success)
-            Console.Write(" (" + match.Groups[1].Value.Trim() + ")");
+            _return += " (" + match.Groups[1].Value.Trim() + ")";
 
         // Read "[conversatioc-content]"
         match = Regex.Match(str, @"\[(.*?)\]");
         if (match.Success)
-            Console.WriteLine(" \"" + match.Groups[1].Value.Trim() + "\"");
+            _return += " \"" + match.Groups[1].Value.Trim() + "\"";
+
+        return _return;
     }
 }
