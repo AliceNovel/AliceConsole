@@ -13,6 +13,11 @@ public class Anov
         Match match;
         string _return = "";
 
+        // Read "[conversation-content]"
+        match = Regex.Match(str, @"\[(.*?)\]");
+        if (match.Success)
+            return " \"" + match.Groups[1].Value.Trim() + "\"";
+
         // Unsupported
         // Read "> place"
         match = Regex.Match(str, @"> (.*)");
@@ -47,11 +52,6 @@ public class Anov
         match = Regex.Match(str, @"/ (.*)");
         if (match.Success)
             _return += " (" + match.Groups[1].Value.Trim() + ")";
-
-        // Read "[conversation-content]"
-        match = Regex.Match(str, @"\[(.*?)\]");
-        if (match.Success)
-            _return += " \"" + match.Groups[1].Value.Trim() + "\"";
 
         return _return;
     }
