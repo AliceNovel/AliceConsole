@@ -10,7 +10,7 @@
     <!-- <Version>0.1.0</Version> -->
     <Authors>Lemon73</Authors>
     <Company>AliceProject</Company>
-    <Copyright>Copyright © author and contributors</Copyright>
+    <Copyright>© Alice Project. All rights reserved.</Copyright>
     <IsPackable>True</IsPackable>
     <PackageProjectUrl>https://github.com/AliceNovel/AliceConsole</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AliceNovel/AliceConsole</RepositoryUrl>
