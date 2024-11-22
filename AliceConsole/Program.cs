@@ -33,11 +33,23 @@ class Program
                     return;
                 }
                 Directory.CreateDirectory(outputDirectoryName);
+
+                // Create "image", "image/background", "story" and "movie" directories.
+                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "image"));
+                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "image", "background"));
+                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "story"));
+                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "movie"));
+
+                // Create "story/main.anov" and "package.json" files.
+                File.Create(Path.Combine(outputDirectoryName, "story", "main.anov"));
+                File.Create(Path.Combine(outputDirectoryName, "package.json"));
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
+
+            return;
         }
 
         // input test that is written in Anov Syntax.
