@@ -6,18 +6,38 @@ class Program
     {
         if (args.Length == 0)
         {
-            Console.WriteLine("Alice Console");
+            Console.WriteLine("");
+            Console.WriteLine("Usage: ./AliceConsole [options]");
+            Console.WriteLine("Usage: ./AliceConsole [path-to-anov-file]");
+            Console.WriteLine("");
+            Console.WriteLine("Options:");
+            Console.WriteLine("  -h|--help         Display help.");
+            Console.WriteLine("");
+            Console.WriteLine("path-to-anov-file:");
+            Console.WriteLine("  The path to an .anov file to execute.");
             return;
         }
 
         if (args[0] == "-h" || args[0] == "--help")
         {
-            Console.WriteLine("# Read Anov Syntax #");
-            Console.WriteLine("Usage: ./AliceConsole <path>");
-            Console.WriteLine("Example: ./AliceConsole sample.anov");
-            Console.WriteLine();
-            Console.WriteLine("# Init anproj file #");
-            Console.WriteLine("Usage: ./AliceConsole init");
+            Console.WriteLine("Usage: ./AliceConsole [path-to-anov-file]");
+            Console.WriteLine("");
+            Console.WriteLine("Run Anov Syntax on Alice Console.");
+            Console.WriteLine("");
+            Console.WriteLine("path-to-anov-file:");
+            Console.WriteLine("  The path to an .anov file to execute.");
+            Console.WriteLine("");
+
+            Console.WriteLine("Usage: ./AliceNovel [sdk-options] [command]");
+            Console.WriteLine("");
+            Console.WriteLine("Run Anov Syntax on Alive Console.");
+            Console.WriteLine("");
+            Console.WriteLine("sdk-options:");
+            Console.WriteLine("  -h|--help         Display help.");
+            Console.WriteLine("");
+            Console.WriteLine("SDK command:");
+            Console.WriteLine("  init              Construct template files and directories for Alice Novel.");
+            Console.WriteLine("");
             return;
         }
 
