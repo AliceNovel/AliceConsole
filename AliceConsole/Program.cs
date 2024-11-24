@@ -41,8 +41,12 @@ class Program
                 Directory.CreateDirectory(Path.Combine(outputDirectoryName, "movie"));
 
                 // Create "story/main.anov" and "package.json" files.
-                File.Create(Path.Combine(outputDirectoryName, "story", "main.anov"));
-                File.Create(Path.Combine(outputDirectoryName, "package.json"));
+                string contentsMainAnov = "- Alice\r\n"
+                                        + "[Welcome to Alice Novel!]\r\n";
+                string contentsPackageJson = "{\r\n  \"game-name\": \"Test Game\",\r\n"
+                                          + "  \"first-read\": \"story/main.anov\"\r\n}";
+                File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
+                File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
             }
             catch (Exception ex)
             {
