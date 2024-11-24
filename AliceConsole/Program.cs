@@ -41,10 +41,12 @@ class Program
                 Directory.CreateDirectory(Path.Combine(outputDirectoryName, "movie"));
 
                 // Create "story/main.anov" and "package.json" files.
-                string contentsMainAnov = "- Alice\r\n"
-                                        + "[Welcome to Alice Novel!]\r\n";
-                string contentsPackageJson = "{\r\n  \"game-name\": \"Test Game\",\r\n"
-                                          + "  \"first-read\": \"story/main.anov\"\r\n}";
+                string contentsMainAnov = "- Alice" + Environment.NewLine
+                                        + "[Welcome to Alice Novel!]" + Environment.NewLine;
+                string contentsPackageJson = "{" + Environment.NewLine
+                                           + "  \"game-name\": \"Test Game\"," + Environment.NewLine
+                                           + "  \"first-read\": \"story/main.anov\"" + Environment.NewLine
+                                           + "}";
                 File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
                 File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
             }
