@@ -22,7 +22,7 @@ public class Anov
         // Read "> place"
         match = Regex.Match(str, @"> (.*)");
         if (match.Success)
-            _return += "<place>";
+            _return += "/ " + match.Groups[1].Value.Trim() + " /";
 
         // Unsupported
         // Read "bgm: background-music"
