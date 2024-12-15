@@ -25,7 +25,7 @@ Alice Novel for CLI.
 | Anov Syntax - Test  | [![test-badge]][test]     |
 | Alice Console       | [![cli-badge]][cli]       |
 | CodeQL              | [![codeql-badge]][codeql] |
-|                     | [![history-badge]][anov]  |
+<!-- |                     | [![history-badge]][anov]  | -->
 <!-- history badges -->
 
 [anov]: https://github.com/AliceNovel/AliceConsole/actions/workflows/build.yml
