@@ -18,4 +18,11 @@ public class UnitTest
         string input = "[Hello World!]";
         Assert.AreEqual(" \"Hello World!\"", Anov.Read(input));
     }
+
+    [TestMethod]
+    public void TestPlace()
+    {
+        string input = "> Neo city";
+        Assert.AreEqual("/ Neo city /", Anov.Read(input));
+    }
 }
