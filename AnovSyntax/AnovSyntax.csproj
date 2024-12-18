@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
 
     <!-- NuGet -->
-    <PackageId>Lemon73.AliceProject.AnovSyntax</PackageId>
+    <PackageId>AliceProject.AnovSyntax</PackageId>
     <!-- <Version>0.1.0</Version> -->
-    <Authors>Lemon73</Authors>
+    <Authors>AliceProject</Authors>
     <Company>AliceProject</Company>
     <Copyright>© Alice Project. All rights reserved.</Copyright>
     <IsPackable>True</IsPackable>
