@@ -32,6 +32,6 @@ jobs:
 
       - name: Publish
         run: >
-          dotnet nuget push Lemon73.AliceProject.AnovSyntax.${{ steps.get_version.outputs.version-without-v }}.nupkg 
-          -s https://nuget.pkg.github.com/Lemon73-Computing/index.json 
+          dotnet nuget push AliceProject.AnovSyntax.${{ steps.get_version.outputs.version-without-v }}.nupkg 
+          -s https://nuget.pkg.github.com/AliceNovel/index.json 
           -k ${{ secrets.NUGET_AUTH_TOKEN }}

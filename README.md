@@ -10,11 +10,11 @@ Alice Novel for CLI.
 <!-- badges -->
 
 [github-release]: https://github.com/AliceNovel/AliceConsole/releases/latest
-[nuget-release]: https://www.nuget.org/packages/Lemon73.AliceProject.AnovSyntax
+[nuget-release]: https://www.nuget.org/packages/AliceProject.AnovSyntax
 [github-license]: https://github.com/AliceNovel/AliceConsole/blob/main/LICENSE
 
 [github-release-badge]: https://img.shields.io/github/release/AliceNovel/AliceConsole.svg?logo=github&style=flat "Latest Release"
-[nuget-release-badge]: https://badgen.net/nuget/v/Lemon73.AliceProject.AnovSyntax "NuGet"
+[nuget-release-badge]: https://badgen.net/nuget/v/AliceProject.AnovSyntax "NuGet"
 [github-license-badge]: https://img.shields.io/github/license/AliceNovel/AliceConsole.svg?style=flat "License"
 [code-size-badge]: https://img.shields.io/github/languages/code-size/AliceNovel/AliceConsole
 
