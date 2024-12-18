@@ -20,8 +20,8 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Title>Alice Console</Title>
-    <Description>Alice Console provides the ability to do this amazing thing in your Alice Novel application.</Description>
+    <Title>Anov Syntax</Title>
+    <Description>Provides support for novel generation using the Anov Syntax.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <DebugType>portable</DebugType>
