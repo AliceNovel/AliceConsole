@@ -13,6 +13,20 @@ public class UnitTest
     }
 
     [TestMethod]
+    public void TestFeeling()
+    {
+        string input = "/ happy";
+        Assert.AreEqual(" (happy)", Anov.Read(input));
+    }
+
+    [TestMethod]
+    public void TestPeopleAndFeeling()
+    {
+        string input = "- Alice / happy";
+        Assert.AreEqual("Alice (happy)", Anov.Read(input));
+    }
+
+    [TestMethod]
     public void TestConversation()
     {
         string input = "[Hello World!]";
