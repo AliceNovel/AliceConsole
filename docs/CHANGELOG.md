@@ -9,39 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- File input (#29).
+- File input ([#29](https://github.com/AliceNovel/AliceConsole/pull/29)).
 
 ## [v0.2.0-preview1] - 2024-04-29
 
 ### Added
 
-- Test codes (#21).
-- Improved some functions (#19).
-- Improved regular expression (#23).
+- Test codes ([#21](https://github.com/AliceNovel/AliceConsole/pull/21)).
+- Improved some functions ([#19](https://github.com/AliceNovel/AliceConsole/pull/19)).
+- Improved regular expression ([#23](https://github.com/AliceNovel/AliceConsole/pull/23)).
 
 ### Changed
 
-- API type (#20).
+- API type ([#20](https://github.com/AliceNovel/AliceConsole/pull/20)).
 
 ## [v0.1.2] - 2024-04-09
 
 ### Added
 
-- Showing of unsupport features (#10).
-- Support emotion (#11).
+- Showing of unsupport features ([#10](https://github.com/AliceNovel/AliceConsole/pull/10)).
+- Support emotion ([#11](https://github.com/AliceNovel/AliceConsole/pull/11)).
 
 ## [v0.1.1] - 2024-03-17
 
 ### Added
 
-- CI/CD (#6).
+- CI/CD ([#6](https://github.com/AliceNovel/AliceConsole/pull/6)).
 
 ## [v0.1.0] - 2024-03-04
 
 ### Added
 
-- Class library from Alice Novel (#3).
-- Sample code of usage (#5).
+- Class library from Alice Novel ([#3](https://github.com/AliceNovel/AliceConsole/pull/3)).
+- Sample code of usage ([#5](https://github.com/AliceNovel/AliceConsole/pull/5)).
 
 [unreleased]: https://github.com/AliceNovel/AliceConsole/compare/v0.2.0-preview1...HEAD
 [v0.2.0-preview1]: https://github.com/AliceNovel/AliceConsole/compare/v0.1.2...v0.2.0-preview1
