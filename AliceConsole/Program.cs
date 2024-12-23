@@ -5,17 +5,10 @@ namespace AliceConsole;
 
 internal class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
         if (args.Length == 0)
         {
-            var versionString = Assembly.GetEntryAssembly()?
-                                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                                        .InformationalVersion
-                                        .ToString();
-
-            Console.WriteLine($"Alice Console v{versionString}");
-            Console.WriteLine("-------------");
             Console.WriteLine("");
             Console.WriteLine("Usage: ./AliceConsole [options]");
             Console.WriteLine("Usage: ./AliceConsole [path-to-anov-file]");
@@ -26,7 +19,7 @@ internal class Program
             Console.WriteLine("");
             Console.WriteLine("path-to-anov-file:");
             Console.WriteLine("  The path to an .anov file to execute.");
-            return;
+            return 1;
         }
 
         if (args[0] == "-h" || args[0] == "--help")
@@ -50,7 +43,7 @@ internal class Program
             Console.WriteLine("SDK command:");
             Console.WriteLine("  init              Construct template files and directories for Alice Novel.");
             Console.WriteLine("");
-            return;
+            return 0;
         }
 
         if (args[0] == "-v" || args[0] == "--version")
@@ -61,7 +54,7 @@ internal class Program
                                         .ToString();
 
             Console.WriteLine($"Alice Console v{versionString}");
-            return;
+            return 0;
         }
 
         if  (args[0] == "init")
@@ -73,7 +66,7 @@ internal class Program
                 if (Directory.Exists(outputDirectoryName))
                 {
                     Console.WriteLine("The path exists already. Please remove \"AnprojTemplate\" directory.");
-                    return;
+                    return 1;
                 }
                 Directory.CreateDirectory(outputDirectoryName);
 
@@ -96,9 +89,10 @@ internal class Program
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                return 1;
             }
 
-            return;
+            return 0;
         }
 
         // input test that is written in Anov Syntax.
@@ -108,7 +102,7 @@ internal class Program
         {
             Console.WriteLine("Error: File does not exist.");
             Console.WriteLine("Hint: Please check that the name is correct.");
-            return;
+            return 1;
         }
 
         using (StreamReader sr = new(filePath))
@@ -123,5 +117,6 @@ internal class Program
             }
             Console.ReadLine();
         }
+        return 0;
     }
 }
