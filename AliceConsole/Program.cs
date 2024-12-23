@@ -1,17 +1,28 @@
 ﻿using AnovSyntax;
+using System.Reflection;
 
-class Program
+namespace AliceConsole;
+
+internal class Program
 {
     static void Main(string[] args)
     {
         if (args.Length == 0)
         {
+            var versionString = Assembly.GetEntryAssembly()?
+                                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                                        .InformationalVersion
+                                        .ToString();
+
+            Console.WriteLine($"Alice Console v{versionString}");
+            Console.WriteLine("-------------");
             Console.WriteLine("");
             Console.WriteLine("Usage: ./AliceConsole [options]");
             Console.WriteLine("Usage: ./AliceConsole [path-to-anov-file]");
             Console.WriteLine("");
             Console.WriteLine("Options:");
             Console.WriteLine("  -h|--help         Display help.");
+            Console.WriteLine("  -v|--version      Display the version of your Alice Console.");
             Console.WriteLine("");
             Console.WriteLine("path-to-anov-file:");
             Console.WriteLine("  The path to an .anov file to execute.");
@@ -34,10 +45,22 @@ class Program
             Console.WriteLine("");
             Console.WriteLine("sdk-options:");
             Console.WriteLine("  -h|--help         Display help.");
+            Console.WriteLine("  -v|--version      Display the version of your Alice Console.");
             Console.WriteLine("");
             Console.WriteLine("SDK command:");
             Console.WriteLine("  init              Construct template files and directories for Alice Novel.");
             Console.WriteLine("");
+            return;
+        }
+
+        if (args[0] == "-v" || args[0] == "--version")
+        {
+            var versionString = Assembly.GetEntryAssembly()?
+                                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                                        .InformationalVersion
+                                        .ToString();
+
+            Console.WriteLine($"Alice Console v{versionString}");
             return;
         }
 
