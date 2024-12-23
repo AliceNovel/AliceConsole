@@ -32,6 +32,11 @@ jobs:
       run: |
         dotnet publish AliceConsole/AliceConsole.csproj -c Release -o ${{ matrix.rid }} -r ${{ matrix.rid }} --self-contained true -p:PublishReadyToRun=false -p:PublishTrimmed=true
 
+    # Not included in Artifacts
+    - name: Pack
+      run: |
+        dotnet pack AliceConsole/AliceConsole.csproj
+
     - name: Copy anov file
       run: |
         cp AliceConsole/sample.anov ${{ matrix.rid }}
