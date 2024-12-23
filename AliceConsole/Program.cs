@@ -1,8 +1,11 @@
 ﻿using AnovSyntax;
+using System.Reflection;
 
-class Program
+namespace AliceConsole;
+
+internal class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
         if (args.Length == 0)
         {
@@ -12,10 +15,11 @@ class Program
             Console.WriteLine("");
             Console.WriteLine("Options:");
             Console.WriteLine("  -h|--help         Display help.");
+            Console.WriteLine("  -v|--version      Display the version of your Alice Console.");
             Console.WriteLine("");
             Console.WriteLine("path-to-anov-file:");
             Console.WriteLine("  The path to an .anov file to execute.");
-            return;
+            return 1;
         }
 
         if (args[0] == "-h" || args[0] == "--help")
@@ -34,11 +38,23 @@ class Program
             Console.WriteLine("");
             Console.WriteLine("sdk-options:");
             Console.WriteLine("  -h|--help         Display help.");
+            Console.WriteLine("  -v|--version      Display the version of your Alice Console.");
             Console.WriteLine("");
             Console.WriteLine("SDK command:");
             Console.WriteLine("  init              Construct template files and directories for Alice Novel.");
             Console.WriteLine("");
-            return;
+            return 0;
+        }
+
+        if (args[0] == "-v" || args[0] == "--version")
+        {
+            var versionString = Assembly.GetEntryAssembly()?
+                                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                                        .InformationalVersion
+                                        .ToString();
+
+            Console.WriteLine($"Alice Console v{versionString}");
+            return 0;
         }
 
         if  (args[0] == "init")
@@ -50,7 +66,7 @@ class Program
                 if (Directory.Exists(outputDirectoryName))
                 {
                     Console.WriteLine("The path exists already. Please remove \"AnprojTemplate\" directory.");
-                    return;
+                    return 1;
                 }
                 Directory.CreateDirectory(outputDirectoryName);
 
@@ -73,9 +89,10 @@ class Program
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                return 1;
             }
 
-            return;
+            return 0;
         }
 
         // input test that is written in Anov Syntax.
@@ -85,7 +102,7 @@ class Program
         {
             Console.WriteLine("Error: File does not exist.");
             Console.WriteLine("Hint: Please check that the name is correct.");
-            return;
+            return 1;
         }
 
         using (StreamReader sr = new(filePath))
@@ -100,5 +117,6 @@ class Program
             }
             Console.ReadLine();
         }
+        return 0;
     }
 }
