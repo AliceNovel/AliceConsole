@@ -9,8 +9,9 @@
     <PackageId>AliceProject.AnovSyntax</PackageId>
     <!-- <Version>0.1.0</Version> -->
     <Authors>AliceProject</Authors>
-    <Company>AliceProject</Company>
+    <Company>$(Authors)</Company>
     <Copyright>© Alice Project. All rights reserved.</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <IsPackable>True</IsPackable>
     <PackageProjectUrl>https://github.com/AliceNovel/AliceConsole</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AliceNovel/AliceConsole</RepositoryUrl>
