@@ -1,7 +1,11 @@
 # Alice Console
+
 Alice Novel for CLI.
 
+This repo contains the source code for cross-platform Alice System command line toolchain. It contains the implementation of each command.
+
 ### Status
+
 <!-- badges -->
 [![github-release-badge]][github-release]
 [![nuget-release-badge]][nuget-release]
@@ -41,4 +45,5 @@ Alice Novel for CLI.
 [history-badge]: https://buildstats.info/github/chart/AliceNovel/AliceConsole?includeBuildsFromPullRequest=false "GitHub Actions History"
 
 ## License
+
 Licensed under the [MIT](./LICENSE).
