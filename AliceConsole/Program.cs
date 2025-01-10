@@ -1,4 +1,5 @@
 ﻿using AnovSyntax;
+using System.IO.Compression;
 using System.Reflection;
 
 namespace AliceConsole;
@@ -42,6 +43,7 @@ internal class Program
             Console.WriteLine("");
             Console.WriteLine("SDK command:");
             Console.WriteLine("  init              Construct template files and directories for Alice Novel.");
+            Console.WriteLine("  pack <directory>  Pack the directory into an .anproj file.");
             Console.WriteLine("");
             return 0;
         }
@@ -57,7 +59,7 @@ internal class Program
             return 0;
         }
 
-        if  (args[0] == "init")
+        if (args[0] == "init")
         {
             string outputDirectoryName = @"AnprojTemplate";
 
@@ -91,6 +93,25 @@ internal class Program
                 Console.WriteLine($"Error: {ex.Message}");
                 return 1;
             }
+
+            return 0;
+        }
+
+        if (args[0] == "pack")
+        {
+            string directoryPath = args[1];
+
+            // Remove the last slash.
+            directoryPath = directoryPath.Trim('/');
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Console.WriteLine("Error: Directory does not exist.");
+                Console.WriteLine("Hint: Please check that the name is correct.");
+                return 1;
+            }
+
+            ZipFile.CreateFromDirectory(directoryPath, $"./{directoryPath}.anproj");
 
             return 0;
         }
