@@ -155,7 +155,10 @@ internal class Program
                 string contentsMainAnov = "- Alice" + Environment.NewLine
                                         + "[Welcome to Alice Novel!]" + Environment.NewLine;
 
-                File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
+                if (entryPoint == "story/main.anov")
+                    File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
+                else
+                    File.WriteAllText(Path.Combine(outputDirectoryName, "main.anov"), contentsMainAnov);
                 File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
             }
             catch (Exception ex)
