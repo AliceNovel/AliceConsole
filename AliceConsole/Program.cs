@@ -1,11 +1,21 @@
 ﻿using AnovSyntax;
 using System.IO.Compression;
 using System.Reflection;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Text.Unicode;
 
 namespace AliceConsole;
 
 internal class Program
 {
+    static readonly JsonSerializerOptions jsonOptions = new()
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), // for Japanese Encoding
+        WriteIndented = true, // for Indent
+    };
+
     static int Main(string[] args)
     {
         if (args.Length == 0)
@@ -61,13 +71,76 @@ internal class Program
 
         if (args[0] == "init")
         {
-            string outputDirectoryName = @"AnprojTemplate";
+            Console.WriteLine("This utility will walk you through creating a package.json file.");
+            Console.WriteLine("It only covers the most common items, and tries to guess sensible defaults.");
+            Console.WriteLine("");
+            Console.WriteLine("Press ^C at any time to quit.");
+            
+            Console.Write("package name: (anproj-template) ");
+            string? packageName = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(packageName))
+                packageName = "anproj-template";
+
+            Console.Write("version: (1.0.0) ");
+            string? version = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(version))
+                version = "1.0.0";
+
+            Console.Write("description: ");
+            string description = Console.ReadLine() ?? "";
+
+            Console.Write("entry point: (story/main.anov) ");
+            string? entryPoint = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(entryPoint))
+                entryPoint = "story/main.anov";
+
+            // Console.Write("git repository: ");
+            // string gitRepository = Console.ReadLine() ?? "";
+
+            // Console.Write("keywords: ");
+            // string keywords = Console.ReadLine() ?? "";
+
+            Console.Write("author: ");
+            string author = Console.ReadLine() ?? "";
+
+            Console.Write("license: ");
+            string license = Console.ReadLine() ?? "";
+
+            string outputDirectoryName = Regex.Replace(packageName, @"\s", "");
+            Console.WriteLine($"About to write to ./{outputDirectoryName}/package.json:" + Environment.NewLine);
+
+            Dictionary<string, string> dictPackageJson = new()
+            {
+                { "game-name", packageName },
+                // { "name", packageName },
+                { "version", version },
+                { "first-read", entryPoint },
+                // { "main", entryPoint },
+                // { "repository", $"{{ \"type\": \"git\", \"url\": \"{gitRepository}\" }}" },
+                // { "keywords", keywords },
+                { "author", author },
+                { "license", license },
+                { "description", description }
+            };
+            string contentsPackageJson = JsonSerializer.Serialize(dictPackageJson, jsonOptions) + Environment.NewLine;
+
+            Console.WriteLine(contentsPackageJson);
+
+            Console.WriteLine("Is this OK? (yes) ");
+            string? answer = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(answer))
+                answer = "yes";
+            if (answer != "yes" && answer != "y")
+            {
+                Console.WriteLine("Aborted.");
+                return 0;
+            }
 
             try
             {
                 if (Directory.Exists(outputDirectoryName))
                 {
-                    Console.WriteLine("The path exists already. Please remove \"AnprojTemplate\" directory.");
+                    Console.WriteLine($"The path exists already. Please remove \"{outputDirectoryName}\" directory.");
                     return 1;
                 }
                 Directory.CreateDirectory(outputDirectoryName);
@@ -81,11 +154,11 @@ internal class Program
                 // Create "story/main.anov" and "package.json" files.
                 string contentsMainAnov = "- Alice" + Environment.NewLine
                                         + "[Welcome to Alice Novel!]" + Environment.NewLine;
-                string contentsPackageJson = "{" + Environment.NewLine
-                                           + "  \"game-name\": \"Test Game\"," + Environment.NewLine
-                                           + "  \"first-read\": \"story/main.anov\"" + Environment.NewLine
-                                           + "}";
-                File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
+
+                if (entryPoint == "story/main.anov")
+                    File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
+                else
+                    File.WriteAllText(Path.Combine(outputDirectoryName, "main.anov"), contentsMainAnov);
                 File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
             }
             catch (Exception ex)
