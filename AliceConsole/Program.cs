@@ -1,11 +1,20 @@
 ﻿using AnovSyntax;
 using System.IO.Compression;
 using System.Reflection;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 
 namespace AliceConsole;
 
 internal class Program
 {
+    static readonly JsonSerializerOptions jsonOptions = new()
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), // for Japanese Encoding
+        WriteIndented = true, // for Indent
+    };
+
     static int Main(string[] args)
     {
         if (args.Length == 0)
@@ -81,10 +90,15 @@ internal class Program
                 // Create "story/main.anov" and "package.json" files.
                 string contentsMainAnov = "- Alice" + Environment.NewLine
                                         + "[Welcome to Alice Novel!]" + Environment.NewLine;
-                string contentsPackageJson = "{" + Environment.NewLine
-                                           + "  \"game-name\": \"Test Game\"," + Environment.NewLine
-                                           + "  \"first-read\": \"story/main.anov\"" + Environment.NewLine
-                                           + "}";
+
+                Dictionary<string, string> dictPackageJson = new()
+                {
+                    { "game-name", "Test Game" },
+                    { "first-read", "story/main.anov" }
+                };
+
+                string contentsPackageJson = JsonSerializer.Serialize(dictPackageJson, jsonOptions) + Environment.NewLine;
+
                 File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
                 File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
             }
