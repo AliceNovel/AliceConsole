@@ -77,22 +77,19 @@ internal class Program
             Console.WriteLine("Press ^C at any time to quit.");
             
             Console.Write("package name: (anproj-template) ");
-            string? packageName = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(packageName))
-                packageName = "anproj-template";
+            string? input = Console.ReadLine();
+            string packageName = string.IsNullOrWhiteSpace(input) ? "anproj-template" : input;
 
             Console.Write("version: (1.0.0) ");
-            string? version = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(version))
-                version = "1.0.0";
+            input = Console.ReadLine();
+            string version = string.IsNullOrWhiteSpace(input) ? "1.0.0" : input;
 
             Console.Write("description: ");
             string description = Console.ReadLine() ?? "";
 
             Console.Write("entry point: (story/main.anov) ");
-            string? entryPoint = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(entryPoint))
-                entryPoint = "story/main.anov";
+            input = Console.ReadLine();
+            string entryPoint = string.IsNullOrWhiteSpace(input) ? "story/main.anov" : input;
 
             // Console.Write("git repository: ");
             // string gitRepository = Console.ReadLine() ?? "";
@@ -106,7 +103,7 @@ internal class Program
             Console.Write("license: ");
             string license = Console.ReadLine() ?? "";
 
-            string outputDirectoryName = Regex.Replace(packageName, @"\s", "");
+            string outputDirectoryName = packageName.Replace(@" ", ""); // Remove spaces.
             Console.WriteLine($"About to write to ./{outputDirectoryName}/package.json:" + Environment.NewLine);
 
             Dictionary<string, string> dictPackageJson = new()
