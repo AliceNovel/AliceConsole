@@ -44,6 +44,20 @@ This repo contains the source code for cross-platform Alice System command line 
 
 [history-badge]: https://buildstats.info/github/chart/AliceNovel/AliceConsole?includeBuildsFromPullRequest=false "GitHub Actions History"
 
+## Basic Usage
+
+First, you can prepare `.anov` and other files with `init` command: 
+
+```sh
+aliceconsole init
+```
+
+Then, you can pack into `.anproj` file format with `pack` command:
+
+```sh
+aliceconsole pack
+```
+
 ## License
 
 Licensed under the [MIT](./LICENSE).
