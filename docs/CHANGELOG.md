@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Added
+
+- \[Alice Console\] `pack` command ([#70](https://github.com/AliceNovel/AliceConsole/pull/70))
+
+### Changed
+
+- \[Alice Console\] Recreate `init` command ([#72](https://github.com/AliceNovel/AliceConsole/pull/72))
+
 ## [v0.2.0] - 2024-12-25
 
 ### Added
