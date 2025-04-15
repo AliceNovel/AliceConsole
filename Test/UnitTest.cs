@@ -30,7 +30,14 @@ public class UnitTest
     public void TestConversation()
     {
         string input = "[Hello World!]";
-        Assert.AreEqual(" \"Hello World!\"", Anov.Read(input));
+        Assert.AreEqual("\"Hello World!\"", Anov.Read(input));
+    }
+
+    [TestMethod]
+    public void TestConversationCJK()
+    {
+        string input = "[Hello World!]";
+        Assert.AreEqual("「Hello World!」", Anov.Read(input, QuoteType.CJKSingleQuote));
     }
 
     [TestMethod]

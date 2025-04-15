@@ -8,15 +8,18 @@ public class Anov
     /// Read the text in anov syntax.
     /// </summary>
     /// <param name="str">The text in anov syntax</param>
-    public static string Read(string str)
+    /// <param name="quoteType">QuoteType in Conversations (Default = DoubleQuote)</param>
+    public static string Read(string str, QuoteType? quoteType = null)
     {
+        quoteType ??= QuoteType.DoubleQuote;
+
         Match match;
         string _return = "";
 
         // Read "[conversation-content]"
         match = Regex.Match(str, @"\[(.*?)\]");
         if (match.Success)
-            return " \"" + match.Groups[1].Value.Trim() + "\"";
+            return quoteType.StartQuote + match.Groups[1].Value.Trim() + quoteType.EndQuote;
 
         // Unsupported
         // Read "> place"
