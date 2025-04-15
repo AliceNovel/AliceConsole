@@ -9,15 +9,18 @@ public class Anov
     /// Read the text in anov syntax.
     /// </summary>
     /// <param name="str">The text in anov syntax</param>
-    public static string Read(string str)
+    /// <param name="quoteType">QuoteType in Conversations (Default = DoubleQuote)</param>
+    public static string Read(string str, QuoteType? quoteType = null)
     {
+        quoteType ??= QuoteType.DoubleQuote;
+
         Match match;
         string _return = "";
 
         // Read "[conversation-content]"
         match = Regex.Match(str, @"\[(.*?)\]");
         if (match.Success)
-            return " \"" + match.Groups[1].Value.Trim() + "\"";
+            return quoteType.StartQuote + match.Groups[1].Value.Trim() + quoteType.EndQuote;
 
         // Unsupported
         // Read "> place"
@@ -63,58 +66,80 @@ public class QuoteType
     public string StartQuote { get; }
     public string EndQuote { get; }
 
+    /// <summary>
+    /// Quotation Type
+    /// </summary>
+    /// <param name="startQuote">Start Quotation</param>
+    /// <param name="endQuote">End Quotation</param>
+
     public QuoteType(string startQuote, string endQuote)
     {
         StartQuote = startQuote;
         EndQuote = endQuote;
     }
 
-    private static readonly Dictionary<string, QuoteType> _quotes = new()
-    {
-        { "None", new QuoteType("", "") },
-        { "SingleQuote", new QuoteType("\'", "\'") },
-        { "DoubleQuote", new QuoteType("\"", "\"") }, // Default
-        { "NovelSingleQuote", new QuoteType("‘", "’") },
-        { "NovelDoubleQuote", new QuoteType("“", "”") },
-        { "ReversedNovelSingleQuote", new QuoteType("‚", "‘") },
-        { "ReversedNovelDoubleQuote", new QuoteType("„", "“") },
-        { "ReversedNovelLowSingleQuote", new QuoteType("‚", "’") },
-        { "ReversedNovelLowDoubleQuote", new QuoteType("„", "”") },
-        { "CJKSingleQuote", new QuoteType("「", "」") },
-        { "CJKDoubleQuote", new QuoteType("『", "』") },
-        { "CJKSingleBracket", new QuoteType("〈", "〉") },
-        { "CJKDoubleBracket", new QuoteType("《", "》") },
-        { "SingleGuillemets", new QuoteType("‹", "›") },
-        { "DoubleGuillemets", new QuoteType("«", "»") },
-        { "ReversedSingleGuillemets", new QuoteType("›", "‹") },
-        { "ReversedDoubleGuillemets", new QuoteType("»", "«") },
-        { "JapaneseDoublePrime", new QuoteType("〝", "〞") },
-        { "JapaneseLowDoublePrime", new QuoteType("〝", "〟") },
-        { "Dash", new QuoteType("― ", "") },
-        { "UnderBar", new QuoteType("_", "_") },
-    };
+    public string Wrap(string input) => $"{StartQuote}{input}{EndQuote}";
 
-    public static QuoteType Get(string name)
-    {
-        if (_quotes.TryGetValue(name, out var pattern))
-            return pattern;
-        throw new KeyNotFoundException($"Pattern '{name}' not found.");
-    }
+    /// <summary>Input</summary>
+    public static readonly QuoteType None = new("", "");
+    /// <summary>'Input'</summary>
+    public static readonly QuoteType SingleQuote = new("\'", "\'");
+    /// <summary>"Input"</summary>
+    public static readonly QuoteType DoubleQuote = new("\"", "\""); // Default
+    /// <summary>‘Input’</summary>
+    public static readonly QuoteType NovelSingleQuote = new("‘", "’");
+    /// <summary>“Input”</summary>
+    public static readonly QuoteType NovelDoubleQuote = new("“", "”");
+    /// <summary>‚Input‘</summary>
+    public static readonly QuoteType ReversedNovelSingleQuote = new("‚", "‘");
+    /// <summary>„Input“</summary>
+    public static readonly QuoteType ReversedNovelDoubleQuote = new("„", "“");
+    /// <summary>‚Input’</summary>
+    public static readonly QuoteType ReversedNovelLowSingleQuote = new("‚", "’");
+    /// <summary>„Input”</summary>
+    public static readonly QuoteType ReversedNovelLowDoubleQuote = new("„", "”");
+    /// <summary>「Input」</summary>
+    public static readonly QuoteType CJKSingleQuote = new("「", "」");
+    /// <summary>『Input』</summary>
+    public static readonly QuoteType CJKDoubleQuote = new("『", "』");
+    /// <summary>〈Input〉</summary>
+    public static readonly QuoteType CJKSingleBracket = new("〈", "〉");
+    /// <summary>《Input》</summary>
+    public static readonly QuoteType CJKDoubleBracket = new("《", "》");
+    /// <summary>‹Input›</summary>
+    public static readonly QuoteType SingleGuillemets = new("‹", "›");
+    /// <summary>«Input»</summary>
+    public static readonly QuoteType DoubleGuillemets = new("«", "»");
+    /// <summary>›Input‹</summary>
+    public static readonly QuoteType ReversedSingleGuillemets = new("›", "‹");
+    /// <summary>»Input«</summary>
+    public static readonly QuoteType ReversedDoubleGuillemets = new("»", "«");
+    /// <summary>〝Input〞</summary>
+    public static readonly QuoteType JapaneseDoublePrime = new("〝", "〞");
+    /// <summary>〝Input〟</summary>
+    public static readonly QuoteType JapaneseLowDoublePrime = new("〝", "〟");
+    /// <summary>― Input</summary>
+    public static readonly QuoteType Dash = new("― ", "");
+    /// <summary>_Input_</summary>
+    public static readonly QuoteType UnderBar = new("_", "_");
 
     public static QuoteType GetQuoteForCulture(CultureInfo culture)
     {
-        string cultureName = culture.Name;
-        return cultureName switch
+        return culture.Name switch
         {
-            "en-US" => _quotes["NovelDoubleQuote"],
-            "en-GB" => _quotes["NovelSingleQuote"],
-            "ja-JP" => _quotes["CJKSingleQuote"],
-            "da-DK" => _quotes["ReversedDoubleGuillemets"],
-            "fr-FR" => _quotes["DoubleGuillemets"],
-            "de-DE" => _quotes["ReversedNovelDoubleQuote"],
-            _ => _quotes["DoubleQuote"]
+            "en-US" => NovelDoubleQuote,
+            "en-GB" => NovelSingleQuote,
+            "ja-JP" => CJKSingleQuote,
+            "da-DK" => ReversedDoubleGuillemets,
+            "fr-FR" => DoubleGuillemets,
+            "de-DE" => ReversedNovelDoubleQuote,
+            _ => DoubleQuote
         };
     }
 
-    public static IEnumerable<QuoteType> Available => _quotes.Values;
+    /// <summary>
+    /// Converts the quote-type value of this instance to its equivalent string representation.
+    /// </summary>
+    /// <returns>String representation.</returns>
+    public override string ToString() => $"QuoteType({StartQuote}, {EndQuote})";
 }
