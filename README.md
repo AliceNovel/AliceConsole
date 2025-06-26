@@ -1,6 +1,6 @@
 # Alice Console
 
-Alice Novel for CLI.
+`aliceconsole` is Alice System on the command line. You can run "Advanced Novel Games", create and pack "Alice Novel Project" with it.
 
 This repo contains the source code for cross-platform Alice System command line toolchain. It contains the implementation of each command.
 
