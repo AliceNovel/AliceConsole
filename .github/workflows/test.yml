@@ -25,4 +25,4 @@ jobs:
     - uses: actions/checkout@v4
     - name: Test
       run: |
-        dotnet test Test/Test.csproj
+        dotnet test AliceConsole.sln

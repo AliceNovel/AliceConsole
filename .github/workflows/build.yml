@@ -25,4 +25,4 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build
       run: |
-        dotnet build AnovSyntax/AnovSyntax.csproj -c Release
+        dotnet build AliceConsole.sln -c Release

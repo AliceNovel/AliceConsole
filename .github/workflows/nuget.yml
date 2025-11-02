@@ -21,9 +21,9 @@ jobs:
         uses: battila7/get-version-action@v2
 
       - name: Pack
-        run: dotnet pack AnovSyntax/AnovSyntax.csproj -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
+        run: dotnet pack src/AnovSyntax/AnovSyntax.csproj -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
 
       - name: Push
-        run: dotnet nuget push AnovSyntax/bin/Release/AliceProject.AnovSyntax.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push src/AnovSyntax/bin/Release/AliceProject.AnovSyntax.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
         env:
           GITHUB_TOKEN: ${{ secrets.NUGET_API_KEY }}
