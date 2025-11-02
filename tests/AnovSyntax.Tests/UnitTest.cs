@@ -1,6 +1,6 @@
 using AnovSyntax;
 
-namespace Test;
+namespace AnovSyntax.Tests;
 
 [TestClass]
 public class UnitTest

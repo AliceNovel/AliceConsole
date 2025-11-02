@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnovSyntax\AnovSyntax.csproj" />
+    <ProjectReference Include="..\..\src\AnovSyntax\AnovSyntax.csproj" />
   </ItemGroup>
 
 </Project>
