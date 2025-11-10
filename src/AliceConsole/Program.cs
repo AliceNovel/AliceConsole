@@ -1,6 +1,6 @@
 ﻿using AnovSyntax;
+using System.CommandLine;
 using System.IO.Compression;
-using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -17,185 +17,171 @@ internal class Program
 
     static int Main(string[] args)
     {
-        if (args.Length == 0)
+        RootCommand rootCommand = new("Alice Console - Create and run a story right there and then, just for you!");
+
+        // Init command
+        Command initCommand = new("init", "Construct template files and directories for Alice Novel.");
+        initCommand.SetAction(parseResult =>
         {
-            Console.WriteLine("");
-            Console.WriteLine("Usage: ./AliceConsole [options]");
-            Console.WriteLine("Usage: ./AliceConsole [path-to-anov-file]");
-            Console.WriteLine("");
-            Console.WriteLine("Options:");
-            Console.WriteLine("  -h|--help         Display help.");
-            Console.WriteLine("  -v|--version      Display the version of your Alice Console.");
-            Console.WriteLine("");
-            Console.WriteLine("path-to-anov-file:");
-            Console.WriteLine("  The path to an .anov file to execute.");
+            return Init();
+        });
+        rootCommand.Subcommands.Add(initCommand);
+
+        // Packing command
+        Command packCommand = new("pack", "Pack the directory into an .anproj file.");
+        Argument<DirectoryInfo> PackDirectoryArgument = new("target-directory");
+        packCommand.Arguments.Add(PackDirectoryArgument);
+        packCommand.SetAction(parseResult =>
+        {
+            DirectoryInfo? packTargetDirectory = parseResult.CommandResult.GetRequiredValue(PackDirectoryArgument);
+            return Pack(packTargetDirectory);
+        });
+        rootCommand.Subcommands.Add(packCommand);
+
+        // Run command
+        Command runCommand = new("run", "The path to an .anov file to execute.");
+        Argument<FileInfo> DefaultFileArgument = new("target-file");
+        runCommand.Arguments.Add(DefaultFileArgument);
+        runCommand.SetAction(parseResult =>
+        {
+            FileInfo? fileInfo = parseResult.CommandResult.GetRequiredValue(DefaultFileArgument);
+            return Run(fileInfo);
+        });
+        rootCommand.Subcommands.Add(runCommand);
+
+        return rootCommand.Parse(args).Invoke();
+    }
+
+    static int Init()
+    {
+        Console.WriteLine("This utility will walk you through creating a package.json file.");
+        Console.WriteLine("It only covers the most common items, and tries to guess sensible defaults.");
+        Console.WriteLine("");
+        Console.WriteLine("Press ^C at any time to quit.");
+
+        Console.Write("package name: (anproj-template) ");
+        string? input = Console.ReadLine();
+        string packageName = string.IsNullOrWhiteSpace(input) ? "anproj-template" : input;
+
+        Console.Write("version: (1.0.0) ");
+        input = Console.ReadLine();
+        string version = string.IsNullOrWhiteSpace(input) ? "1.0.0" : input;
+
+        Console.Write("description: ");
+        string description = Console.ReadLine() ?? "";
+
+        Console.Write("entry point: (story/main.anov) ");
+        input = Console.ReadLine();
+        string entryPoint = string.IsNullOrWhiteSpace(input) ? "story/main.anov" : input;
+
+        // Console.Write("git repository: ");
+        // string gitRepository = Console.ReadLine() ?? "";
+
+        // Console.Write("keywords: ");
+        // string keywords = Console.ReadLine() ?? "";
+
+        Console.Write("author: ");
+        string author = Console.ReadLine() ?? "";
+
+        Console.Write("license: ");
+        string license = Console.ReadLine() ?? "";
+
+        string outputDirectoryName = packageName.Replace(@" ", ""); // Remove spaces.
+        Console.WriteLine($"About to write to ./{outputDirectoryName}/package.json:" + Environment.NewLine);
+
+        Dictionary<string, string> dictPackageJson = new()
+        {
+            { "game-name", packageName },
+            // { "name", packageName },
+            { "version", version },
+            { "first-read", entryPoint },
+            // { "main", entryPoint },
+            // { "repository", $"{{ \"type\": \"git\", \"url\": \"{gitRepository}\" }}" },
+            // { "keywords", keywords },
+            { "author", author },
+            { "license", license },
+            { "description", description }
+        };
+        string contentsPackageJson = JsonSerializer.Serialize(dictPackageJson, jsonOptions) + Environment.NewLine;
+
+        Console.WriteLine(contentsPackageJson);
+
+        Console.WriteLine("Is this OK? (yes) ");
+        string? answer = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(answer))
+            answer = "yes";
+        if (answer != "yes" && answer != "y")
+        {
+            Console.WriteLine("Aborted.");
+            return 0;
+        }
+
+        try
+        {
+            if (Directory.Exists(outputDirectoryName))
+            {
+                Console.WriteLine($"The path exists already. Please remove \"{outputDirectoryName}\" directory.");
+                return 1;
+            }
+            Directory.CreateDirectory(outputDirectoryName);
+
+            // Create "image", "image/background", "story" and "movie" directories.
+            Directory.CreateDirectory(Path.Combine(outputDirectoryName, "image"));
+            Directory.CreateDirectory(Path.Combine(outputDirectoryName, "image", "background"));
+            Directory.CreateDirectory(Path.Combine(outputDirectoryName, "story"));
+            Directory.CreateDirectory(Path.Combine(outputDirectoryName, "movie"));
+
+            // Create "story/main.anov" and "package.json" files.
+            string contentsMainAnov = "- Alice" + Environment.NewLine
+                                    + "[Welcome to Alice Novel!]" + Environment.NewLine;
+
+            if (entryPoint == "story/main.anov")
+                File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
+            else
+                File.WriteAllText(Path.Combine(outputDirectoryName, "main.anov"), contentsMainAnov);
+            File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
             return 1;
         }
 
-        if (args[0] == "-h" || args[0] == "--help")
-        {
-            Console.WriteLine("Usage: ./AliceConsole [path-to-anov-file]");
-            Console.WriteLine("");
-            Console.WriteLine("Run Anov Syntax on Alice Console.");
-            Console.WriteLine("");
-            Console.WriteLine("path-to-anov-file:");
-            Console.WriteLine("  The path to an .anov file to execute.");
-            Console.WriteLine("");
+        return 0;
+    }
 
-            Console.WriteLine("Usage: ./AliceNovel [sdk-options] [command]");
-            Console.WriteLine("");
-            Console.WriteLine("Run Anov Syntax on Alive Console.");
-            Console.WriteLine("");
-            Console.WriteLine("sdk-options:");
-            Console.WriteLine("  -h|--help         Display help.");
-            Console.WriteLine("  -v|--version      Display the version of your Alice Console.");
-            Console.WriteLine("");
-            Console.WriteLine("SDK command:");
-            Console.WriteLine("  init              Construct template files and directories for Alice Novel.");
-            Console.WriteLine("  pack <directory>  Pack the directory into an .anproj file.");
-            Console.WriteLine("");
-            return 0;
+    static int Pack(DirectoryInfo? dirInfo)
+    {
+        if (dirInfo is null)
+            return 1;
+
+        if (!dirInfo.Exists)
+        {
+            Console.WriteLine("Error: Directory does not exist.");
+            Console.WriteLine("Hint: Please check that the name is correct.");
+            return 1;
         }
 
-        if (args[0] == "-v" || args[0] == "--version")
-        {
-            var versionString = Assembly.GetEntryAssembly()?
-                                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                                        .InformationalVersion
-                                        .ToString();
+        // Remove the last slash.
+        string directoryPath = dirInfo.FullName.TrimEnd('/');
 
-            Console.WriteLine($"Alice Console v{versionString}");
-            return 0;
-        }
+        ZipFile.CreateFromDirectory(directoryPath, $"{directoryPath}.anproj");
+        return 0;
+    }
 
-        if (args[0] == "init")
-        {
-            Console.WriteLine("This utility will walk you through creating a package.json file.");
-            Console.WriteLine("It only covers the most common items, and tries to guess sensible defaults.");
-            Console.WriteLine("");
-            Console.WriteLine("Press ^C at any time to quit.");
-            
-            Console.Write("package name: (anproj-template) ");
-            string? input = Console.ReadLine();
-            string packageName = string.IsNullOrWhiteSpace(input) ? "anproj-template" : input;
+    static int Run(FileInfo? fileInfo)
+    {
+        if (fileInfo is null)
+            return 1;
 
-            Console.Write("version: (1.0.0) ");
-            input = Console.ReadLine();
-            string version = string.IsNullOrWhiteSpace(input) ? "1.0.0" : input;
-
-            Console.Write("description: ");
-            string description = Console.ReadLine() ?? "";
-
-            Console.Write("entry point: (story/main.anov) ");
-            input = Console.ReadLine();
-            string entryPoint = string.IsNullOrWhiteSpace(input) ? "story/main.anov" : input;
-
-            // Console.Write("git repository: ");
-            // string gitRepository = Console.ReadLine() ?? "";
-
-            // Console.Write("keywords: ");
-            // string keywords = Console.ReadLine() ?? "";
-
-            Console.Write("author: ");
-            string author = Console.ReadLine() ?? "";
-
-            Console.Write("license: ");
-            string license = Console.ReadLine() ?? "";
-
-            string outputDirectoryName = packageName.Replace(@" ", ""); // Remove spaces.
-            Console.WriteLine($"About to write to ./{outputDirectoryName}/package.json:" + Environment.NewLine);
-
-            Dictionary<string, string> dictPackageJson = new()
-            {
-                { "game-name", packageName },
-                // { "name", packageName },
-                { "version", version },
-                { "first-read", entryPoint },
-                // { "main", entryPoint },
-                // { "repository", $"{{ \"type\": \"git\", \"url\": \"{gitRepository}\" }}" },
-                // { "keywords", keywords },
-                { "author", author },
-                { "license", license },
-                { "description", description }
-            };
-            string contentsPackageJson = JsonSerializer.Serialize(dictPackageJson, jsonOptions) + Environment.NewLine;
-
-            Console.WriteLine(contentsPackageJson);
-
-            Console.WriteLine("Is this OK? (yes) ");
-            string? answer = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(answer))
-                answer = "yes";
-            if (answer != "yes" && answer != "y")
-            {
-                Console.WriteLine("Aborted.");
-                return 0;
-            }
-
-            try
-            {
-                if (Directory.Exists(outputDirectoryName))
-                {
-                    Console.WriteLine($"The path exists already. Please remove \"{outputDirectoryName}\" directory.");
-                    return 1;
-                }
-                Directory.CreateDirectory(outputDirectoryName);
-
-                // Create "image", "image/background", "story" and "movie" directories.
-                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "image"));
-                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "image", "background"));
-                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "story"));
-                Directory.CreateDirectory(Path.Combine(outputDirectoryName, "movie"));
-
-                // Create "story/main.anov" and "package.json" files.
-                string contentsMainAnov = "- Alice" + Environment.NewLine
-                                        + "[Welcome to Alice Novel!]" + Environment.NewLine;
-
-                if (entryPoint == "story/main.anov")
-                    File.WriteAllText(Path.Combine(outputDirectoryName, "story", "main.anov"), contentsMainAnov);
-                else
-                    File.WriteAllText(Path.Combine(outputDirectoryName, "main.anov"), contentsMainAnov);
-                File.WriteAllText(Path.Combine(outputDirectoryName, "package.json"), contentsPackageJson);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return 1;
-            }
-
-            return 0;
-        }
-
-        if (args[0] == "pack")
-        {
-            string directoryPath = args[1];
-
-            // Remove the last slash.
-            directoryPath = directoryPath.Trim('/');
-
-            if (!Directory.Exists(directoryPath))
-            {
-                Console.WriteLine("Error: Directory does not exist.");
-                Console.WriteLine("Hint: Please check that the name is correct.");
-                return 1;
-            }
-
-            ZipFile.CreateFromDirectory(directoryPath, $"./{directoryPath}.anproj");
-
-            return 0;
-        }
-
-        // input test that is written in Anov Syntax.
-        string filePath = args[0];
-
-        if (!File.Exists(filePath))
+        if (!fileInfo.Exists)
         {
             Console.WriteLine("Error: File does not exist.");
             Console.WriteLine("Hint: Please check that the name is correct.");
             return 1;
         }
 
-        using (StreamReader sr = new(filePath))
+        using (StreamReader sr = new(fileInfo.FullName))
         {
             while (!sr.EndOfStream)
             {

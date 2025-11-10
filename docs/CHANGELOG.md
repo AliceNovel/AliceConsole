@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v0.3.1] - 2025-11-10
+
+### Changed
+
+- Change directoriess structure ([#94](https://github.com/AliceNovel/AliceConsole/issues/94))
+- \[Alice Console\] Replace exists command-line system with System.CommandLine ([#96](https://github.com/AliceNovel/AliceConsole/issues/96))
+  - ***BREAKING CHANGE***: Removed `--version` option -> Use `-v` option instead
+  - ***BREAKING CHANGE***: Removed `aliceconsole <file-path>` argument -> Use `run` command instead
+
+## [v0.3.0] - 2025-04-15
+
 ### Added
 
 - \[Alice Console\] `pack` command ([#70](https://github.com/AliceNovel/AliceConsole/pull/70))
+- \[Anov Syntax\] Improving the Flexibility of Conversational Commands ([#89](https://github.com/AliceNovel/AliceConsole/issues/89))
 
 ### Changed
 
@@ -62,7 +74,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Class library from Alice Novel ([#3](https://github.com/AliceNovel/AliceConsole/pull/3)).
 - Sample code of usage ([#5](https://github.com/AliceNovel/AliceConsole/pull/5)).
 
-[unreleased]: https://github.com/AliceNovel/AliceConsole/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/AliceNovel/AliceConsole/compare/v0.3.1...HEAD
+[v0.3.1]: https://github.com/AliceNovel/AliceConsole/compare/v0.3.0...v0.3.1
+[v0.3.0]: https://github.com/AliceNovel/AliceConsole/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/AliceNovel/AliceConsole/compare/v0.2.0-preview1...v0.2.0
 [v0.2.0-preview1]: https://github.com/AliceNovel/AliceConsole/compare/v0.1.2...v0.2.0-preview1
 [v0.1.2]: https://github.com/AliceNovel/AliceConsole/compare/v0.1.1...v0.1.2
