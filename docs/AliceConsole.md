@@ -7,8 +7,7 @@ Alice Console is the useful tool to read `.anov` file and create `.anproj` fotma
 ### Requirement
 
 - Git
-- .NET CLI  
-(.NET SDK 8.0.100 or a later version)
+- .NET SDK 10.0.100 (or a later version)
 
 ### Install
 
