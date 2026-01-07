@@ -1,0 +1,89 @@
+name: Check and Report Code Coverage for Unit Testing
+
+on:
+  push: 
+    branches: [ "main" ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      id: test
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+
+    - name: Find coverage output path
+      run: |
+        cp $(find . -name "coverage.cobertura.xml") .
+
+    - name: Run ReportGenerator 
+      run: |
+        dotnet tool install -g dotnet-reportgenerator-globaltool
+        reportgenerator -reports:"coverage.cobertura.xml" -targetdir:"report" -reporttypes:"Html;MarkdownSummary"
+
+        echo "SUMMARY<<EOF" >> $GITHUB_ENV
+        echo "$(cat report/Summary.md)" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
+    - name: Upload coverage report into GitHub Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: report/ 
+
+    - name: Add a comment to the PR
+      uses: actions/github-script@v6
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          // 1. Retrieve existing bot comments for the PR
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          })
+          const botComment = comments.find(comment => {
+            return comment.user.type === 'Bot' && comment.body.includes('dotnet test 🤖')
+          })
+          // 2. Prepare format of the comment
+          const output = `## Code Coverage
+          Result: ${{ steps.test.outcome }}
+
+          <details><summary>Show coverage summary</summary>
+          
+          ${{ env.SUMMARY }}
+          
+          </details>`;
+          // 3. If we have a comment, update it, otherwise create a new one
+          if (botComment) {
+            github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: botComment.id,
+              body: output
+            })
+          } else {
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+          }
