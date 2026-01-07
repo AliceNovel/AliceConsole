@@ -28,6 +28,6 @@ jobs:
       - name: Push
         run: |
           dotnet nuget push src/AnovSyntax/bin/Release/AliceProject.AnovSyntax.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-          dotnet nuget push src/AliceConsole/bin/Release/AliceProject.AliceConsole.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+          dotnet nuget push src/AliceConsole/nupkg/AliceProject.AliceConsole.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
         env:
           GITHUB_TOKEN: ${{ secrets.NUGET_API_KEY }}
