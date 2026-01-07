@@ -16,7 +16,7 @@
     <PackageProjectUrl>https://github.com/AliceNovel/AliceConsole</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AliceNovel/AliceConsole</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>alicenovel;aliceproject;anov;anovsyntax;</PackageTags>
+    <PackageTags>alicenovel;aliceproject;alicesystem;anov;anovsyntax;</PackageTags>
     <IncludeSymbols>True</IncludeSymbols>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

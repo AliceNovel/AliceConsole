@@ -11,33 +11,30 @@ Alice Console is the useful tool to read `.anov` file and create `.anproj` fotma
 
 ### Install
 
+#### From Nuget.org
+
+```sh
+dotnet tool install --global AliceProject.AliceConsole
+```
+
+#### From Source
+
 1. Clone this repository
 1. Pack source with .NET CLI
     ```sh
-    cd AliceConsole
+    cd src/AliceConsole
     dotnet pack 
     ```
 1. Install this solution
     ```sh
-    dotnet tool install --global --add-source ./nupkg AliceConsole
+    dotnet tool install --global --add-source ./nupkg AliceProject.AliceConsole
     ```
 
 ### Uninstall
 
-<!-- 
-1. Check tool placement
-    ```sh
-    which aliceconsole
-    # In my case: /home/lemon73/.dotnet/tools/aliceconsole
-    ```
--->
-1. Uninstall this tool
-    ```sh
-    # Linux, macOS
-    dotnet tool install --tool-path ~/.dotnet/tools --add-source ./nupkg AliceConsole
-    # Windows
-    dotnet tool install --tool-path c:\dotnet-tools --add-source ./nupkg AliceConsole
-    ```
+```sh
+dotnet tool uninstall --global AliceProject.AliceConsole
+```
 
 ### Usage
 

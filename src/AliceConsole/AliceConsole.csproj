@@ -9,6 +9,29 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>aliceconsole</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
+
+    <!-- NuGet -->
+    <PackageId>AliceProject.AliceConsole</PackageId>
+    <!-- <Version>0.1.0</Version> -->
+    <Authors>AliceProject</Authors>
+    <Company>$(Authors)</Company>
+    <Copyright>© Alice Project. All rights reserved.</Copyright>
+    <PackageReadmeFile>AliceConsole.md</PackageReadmeFile>
+    <IsPackable>True</IsPackable>
+    <PackageProjectUrl>https://github.com/AliceNovel/AliceConsole</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AliceNovel/AliceConsole</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>alicenovel;aliceproject;alicesystem;anov;aliceconsole;</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>Alice Console</Title>
+    <Description>The Advanced-Novel Reader.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <DebugType>portable</DebugType>
+    <!-- <PackageIcon>icon.png</PackageIcon> -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +41,12 @@
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.1" />
   </ItemGroup>
+
+	<ItemGroup>
+		<None Include="../../docs/AliceConsole.md">
+			<Pack>True</Pack>
+			<PackagePath>/</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
